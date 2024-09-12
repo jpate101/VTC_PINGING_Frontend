@@ -1,0 +1,32 @@
+.graph-container {
+    margin-bottom: 30px;
+    padding: 10px;
+  }
+  
+  .table-container {
+    margin-top: 30px;
+  }
+  
+  .currently-on-section {
+    margin-bottom: 30px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+  }
+  
+  .currently-on-section h3 {
+    margin: 0;
+    padding-bottom: 10px;
+  }
+  
+  .currently-on-section ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .currently-on-section li {
+    padding: 5px 0;
+  }
+
+  
