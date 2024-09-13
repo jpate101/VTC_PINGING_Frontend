@@ -1,6 +1,9 @@
 .graph-container {
-    margin-bottom: 30px;
-    padding: 10px;
+    width: 100%; /* Adjust width as needed */
+
+    height: 400px; /* Adjust height as needed */
+    margin: 10px;
+    box-sizing: border-box;
   }
   
   .table-container {

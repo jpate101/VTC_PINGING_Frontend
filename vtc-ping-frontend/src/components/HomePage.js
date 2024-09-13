@@ -11,6 +11,9 @@ const HomePage = () => {
       <div><Link to="/disk-health-report">Go to Disk Health Report</Link></div>
 
       <div><Link to="/AvailabilityReport">Go to Availability Report</Link></div>
+
+      <div><Link to="/TeltonikaAvailabilityReport">Go to TeltonikaAvailability Report</Link></div>
+      <div><Link to="/CameraReport">Go to Camera Report</Link></div>
     </div>
   );
 };

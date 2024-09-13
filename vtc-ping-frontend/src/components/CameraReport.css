@@ -1,0 +1,39 @@
+.container {
+    padding: 20px;
+  }
+  
+  .header {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: blue;
+    text-decoration: underline;
+  }
+  
+  .dropdown-container {
+    margin-bottom: 20px;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .th, .td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .chart-container {
+    width: 600px; /* Adjust container width */
+    margin: 0 auto;
+  }
+  
+  .loading, .error {
+    color: red;
+  }

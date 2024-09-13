@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import './AvailabilityReport.css'; // Import the CSS file
+import { Link } from 'react-router-dom';
 
 const AvailabilityReport = () => {
   const [pingData, setPingData] = useState([]);
@@ -42,7 +43,7 @@ const AvailabilityReport = () => {
     const now = new Date();
     const recentData = pingData.filter(entry => {
       const entryTime = new Date(entry.timestamp);
-      return entry.message.type === 'Ping' && entryTime >= new Date(now.getTime() - 10 * 60 * 60 * 1000);
+      return entry.message.type === 'Ping' && entryTime >= new Date(now.getTime() - 4 * 60 * 60 * 1000);
     });
 
     const systemStatus = {};
@@ -68,20 +69,21 @@ const AvailabilityReport = () => {
   // Generate graph data for a specific system
   const generateGraphData = (systemName) => {
     const now = new Date();
-    const startTime = new Date(now.getTime() - 10 * 60 * 60 * 1000); // 10 hours ago
+    const startTime = new Date(now.getTime() - 4 * 60 * 60 * 1000); // 4 hours ago
 
     const labels = [];
     const data = [];
+    
+    const increment = 3 * 60 * 1000; // 3 minutes in milliseconds
 
-    for (let i = 0; i < 600; i++) { // 600 minutes in 10 hours
-      const currentTime = new Date(startTime.getTime() + i * 60 * 1000); // Increment by 1 minute
+    for (let currentTime = startTime; currentTime <= now; currentTime = new Date(currentTime.getTime() + increment)) {
       labels.push(currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
 
       const isOn = pingData.some(entry => {
         const entryTime = new Date(entry.timestamp);
         return entry.message.systemName === systemName &&
                entryTime >= currentTime &&
-               entryTime < new Date(currentTime.getTime() + 60 * 1000);
+               entryTime < new Date(currentTime.getTime() + increment);
       });
 
       data.push(isOn ? 1 : 0);
@@ -107,6 +109,7 @@ const AvailabilityReport = () => {
   return (
     <div>
       <h2>Availability Report</h2>
+      <Link to="/" className="link">Go back to Home Page</Link>
 
       {/* Section for currently "On" devices */}
       <div className="currently-on-section">
@@ -147,9 +150,19 @@ const AvailabilityReport = () => {
                       stepSize: 1,
                       callback: (value) => (value === 1 ? 'On' : 'Off'),
                     },
+                    grid: {
+                      lineWidth: 0.5, // Adjust grid line thickness
+                      color: '#ddd', // Change grid line color
+                    },
+                    border: {
+                      width: 1, // Adjust border line thickness
+                      color: '#000', // Change border color
+                    },
                   },
                 },
               }} 
+              width={600} // Set chart width
+              height={300} // Set chart height
             />
           </div>
         ))
