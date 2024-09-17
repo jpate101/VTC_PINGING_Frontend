@@ -1,50 +1,70 @@
 .container {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .header {
-    font-size: 2rem;
-    margin-bottom: 10px;
-  }
-  
-  .link {
-    text-decoration: none;
-    color: blue;
-    font-size: 1.2rem;
-  }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .th, .td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .th {
-    background-color: #f4f4f4;
-    text-align: left;
-    cursor: pointer;
-  }
-  
-  .th:hover {
-    background-color: #e2e2e2;
-  }
-  
-  .loading {
-    font-style: italic;
-    color: gray;
-  }
-  
-  .error {
-    color: red;
-    font-weight: bold;
-  }
-  
-  .warning-row {
-    background-color: #fdd;
-  }
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.link {
+  text-decoration: none;
+  color: blue;
+  font-size: 1.2rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.th, .td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.th {
+  background-color: #f4f4f4;
+  text-align: left;
+  cursor: pointer;
+}
+
+.th:hover {
+  background-color: #e2e2e2;
+}
+
+.loading {
+  font-style: italic;
+  color: gray;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
+
+.high-usage-list {
+  margin-bottom: 20px;
+}
+
+.high-usage-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.high-usage-list li {
+  background-color: #fdd;
+  padding: 5px;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+}
+
+.high-usage-row {
+  background-color: #fdd; /* Red for high usage */
+}
+
+.normal-usage-row {
+  background-color: #dfd; /* Green for normal usage */
+}

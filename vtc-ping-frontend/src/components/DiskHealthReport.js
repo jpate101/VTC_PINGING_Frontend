@@ -79,15 +79,25 @@ const DiskHealthReport = () => {
   const driveColumns = getDriveColumns();
   const sortedData = getSortedData();
 
-  // Function to determine if a row should have a red background
-  const isWarningRow = (diskUsage) => {
+  // Function to determine if a row should have a red or green background based on C: drive
+  const getRowClass = (diskUsage) => {
     if (diskUsage && diskUsage['C:\\']) {
       const { free, total } = diskUsage['C:\\'];
+      const usedPercentage = ((total - free) / total) * 100;
+      return usedPercentage > 80 ? 'high-usage-row' : 'normal-usage-row';
+    }
+    return 'normal-usage-row';
+  };
+
+  // Get a list of systems with C: drive usage above 80%
+  const highUsageSystems = sortedData.filter(entry => {
+    if (entry.diskUsage && entry.diskUsage['C:\\']) {
+      const { free, total } = entry.diskUsage['C:\\'];
       const usedPercentage = ((total - free) / total) * 100;
       return usedPercentage > 80;
     }
     return false;
-  };
+  }).map(entry => entry.systemName);
 
   return (
     <div className="container">
@@ -96,36 +106,52 @@ const DiskHealthReport = () => {
       <Link to="/" className="link">Go back to Home Page</Link>
       {isLoading && <p className="loading">Loading...</p>}
       {error && <p className="error">Error: {error}</p>}
+      
       {!isLoading && !error && (
-        <table className="table">
-          <thead>
-            <tr>
-              <th className="th" onClick={() => handleSort('systemName')}>System Name</th>
-              <th className="th" onClick={() => handleSort('timestamp')}>Timestamp</th>
-              {driveColumns.map(drive => (
-                <th key={drive} className="th">{drive}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {sortedData.map((entry, index) => (
-              <tr
-                key={index}
-                className={isWarningRow(entry.diskUsage) ? 'warning-row' : ''}
-              >
-                <td className="td">{entry.systemName || 'Unknown'}</td>
-                <td className="td">{new Date(entry.timestamp).toLocaleString()}</td>
+        <>
+          {/* List of systems with high disk usage */}
+          {highUsageSystems.length > 0 && (
+            <div className="high-usage-list">
+              <h2>Systems with High C: Drive Usage</h2>
+              <ul>
+                {highUsageSystems.map((systemName, index) => (
+                  <li key={index}>{systemName}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Disk health table */}
+          <table className="table">
+            <thead>
+              <tr>
+                <th className="th" onClick={() => handleSort('systemName')}>System Name</th>
+                <th className="th" onClick={() => handleSort('timestamp')}>Timestamp</th>
                 {driveColumns.map(drive => (
-                  <td key={drive} className="td">
-                    {entry.diskUsage[drive]
-                      ? `${formatGB(entry.diskUsage[drive].total - entry.diskUsage[drive].free)} GB used of ${formatGB(entry.diskUsage[drive].total)} GB total`
-                      : 'N/A'}
-                  </td>
+                  <th key={drive} className="th">{drive}</th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {sortedData.map((entry, index) => (
+                <tr
+                  key={index}
+                  className={getRowClass(entry.diskUsage)}
+                >
+                  <td className="td">{entry.systemName || 'Unknown'}</td>
+                  <td className="td">{new Date(entry.timestamp).toLocaleString()}</td>
+                  {driveColumns.map(drive => (
+                    <td key={drive} className="td">
+                      {entry.diskUsage[drive]
+                        ? `${formatGB(entry.diskUsage[drive].total - entry.diskUsage[drive].free)} GB used of ${formatGB(entry.diskUsage[drive].total)} GB total`
+                        : 'N/A'}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
       )}
     </div>
   );
