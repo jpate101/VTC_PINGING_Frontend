@@ -13,6 +13,7 @@ function Header() {
           <li><Link to="/TeltonikaAvailabilityReport">Teltonika Availability Report</Link></li>
           <li><Link to="/CameraReport">Camera Report</Link></li>
           <li><Link to="/GpsReport">GPS Report</Link></li>
+          <li><Link to="/SignalReport">Signal Report</Link></li>
         </ul>
       </nav>
     </header>

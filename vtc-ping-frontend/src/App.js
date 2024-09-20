@@ -6,7 +6,9 @@ import AvailabilityReport from './components/AvailabilityReport';
 import TeltonikaAvailabilityReport from './components/TeltonikaAvailabilityReport';
 import CameraReport from './components/CameraReport';
 import GpsReport from './components/GpsReport';
+import SignalReport from './components/SignalReport';
 import Header from './components/Header';
+import Dashboard from './components/Dashboard';
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
           <Route path="/TeltonikaAvailabilityReport" element={<TeltonikaAvailabilityReport />} />
           <Route path="/CameraReport" element={<CameraReport/>} />
           <Route path='/GpsReport' element={<GpsReport/>}/>
+          <Route path='/SignalReport' element={<SignalReport/>} />
+          <Route path='/Dashboard' element={<Dashboard/>} />
         </Routes>
       </div>
     </BrowserRouter>
