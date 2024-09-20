@@ -60,7 +60,7 @@ const TeltonikaAvailabilityReport = () => {
 
   const generateGraphData = (imei) => {
     const now = new Date();
-    const startTime = new Date(now.getTime() - 4 * 60 * 60 * 1000); // 4 hours ago
+    const startTime = new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000); // 4 hours ago
 
     const labels = [];
     const data = [];

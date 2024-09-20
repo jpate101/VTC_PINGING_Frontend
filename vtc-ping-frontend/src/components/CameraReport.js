@@ -48,7 +48,7 @@ const CameraReport = () => {
   // Function to generate graph data for a specific camera
   const generateCameraGraphData = (cameraIP, systemData) => {
     const now = new Date();
-    const fourHoursAgo = new Date(now.getTime() - 4 * 60 * 60 * 1000);
+    const fourHoursAgo = new Date(now.getTime() - 3* 24 * 60 * 60 * 1000);
 
     const labels = [];
     const statusData = [];
