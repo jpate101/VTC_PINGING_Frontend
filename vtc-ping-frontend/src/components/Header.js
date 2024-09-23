@@ -14,6 +14,7 @@ function Header() {
           <li><Link to="/CameraReport">Camera Report</Link></li>
           <li><Link to="/GpsReport">GPS Report</Link></li>
           <li><Link to="/SignalReport">Signal Report</Link></li>
+          <li><Link to="/CpuUsageReport">CPU Usage Report</Link></li>
         </ul>
       </nav>
     </header>

@@ -9,6 +9,7 @@ import GpsReport from './components/GpsReport';
 import SignalReport from './components/SignalReport';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
+import CpuUsageReport from './components/CpuUsageReport';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path='/GpsReport' element={<GpsReport/>}/>
           <Route path='/SignalReport' element={<SignalReport/>} />
           <Route path='/Dashboard' element={<Dashboard/>} />
+          <Route path='/CpuUsageReport' element={<CpuUsageReport/>} />
         </Routes>
       </div>
     </BrowserRouter>
