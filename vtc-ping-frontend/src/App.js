@@ -17,7 +17,7 @@ function App() {
       <div className="App">
         <Header />
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="/disk-health-report" element={<DiskHealthReport />} />
           <Route path="/AvailabilityReport" element={<AvailabilityReport />} />
           <Route path="/TeltonikaAvailabilityReport" element={<TeltonikaAvailabilityReport />} />

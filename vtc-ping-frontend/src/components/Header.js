@@ -7,7 +7,7 @@ function Header() {
     <header>
       <nav>
         <ul>
-          <li><Link to="/">Home</Link></li>
+          <li><Link to="/">Dashboard</Link></li>
           <li><Link to="/disk-health-report">Disk Health Report</Link></li>
           <li><Link to="AvailabilityReport">Availability Report</Link></li>
           <li><Link to="/TeltonikaAvailabilityReport">Teltonika Availability Report</Link></li>
