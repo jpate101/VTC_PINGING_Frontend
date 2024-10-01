@@ -79,7 +79,6 @@ const DiskHealthReport = () => {
   const driveColumns = getDriveColumns();
   const sortedData = getSortedData();
 
-  // Function to determine if a row should have a red or green background based on C: drive
   const getRowClass = (diskUsage) => {
     if (diskUsage && diskUsage['C:\\']) {
       const { free, total } = diskUsage['C:\\'];
@@ -89,7 +88,13 @@ const DiskHealthReport = () => {
     return 'normal-usage-row';
   };
 
-  // Get a list of systems with C: drive usage above 80%
+  const isTimestampRecent = (timestamp) => {
+    const currentTime = new Date();
+    const entryTime = new Date(timestamp);
+    const timeDiff = (currentTime - entryTime) / 1000 / 60; // difference in minutes
+    return timeDiff <= 5;
+  };
+
   const highUsageSystems = sortedData.filter(entry => {
     if (entry.diskUsage && entry.diskUsage['C:\\']) {
       const { free, total } = entry.diskUsage['C:\\'];
@@ -109,7 +114,6 @@ const DiskHealthReport = () => {
       
       {!isLoading && !error && (
         <>
-          {/* List of systems with high disk usage */}
           {highUsageSystems.length > 0 && (
             <div className="high-usage-list">
               <h2>Systems with High C: Drive Usage</h2>
@@ -121,7 +125,6 @@ const DiskHealthReport = () => {
             </div>
           )}
 
-          {/* Disk health table */}
           <table className="table">
             <thead>
               <tr>
@@ -133,22 +136,24 @@ const DiskHealthReport = () => {
               </tr>
             </thead>
             <tbody>
-              {sortedData.map((entry, index) => (
-                <tr
-                  key={index}
-                  className={getRowClass(entry.diskUsage)}
-                >
-                  <td className="td">{entry.systemName || 'Unknown'}</td>
-                  <td className="td">{new Date(entry.timestamp).toLocaleString()}</td>
-                  {driveColumns.map(drive => (
-                    <td key={drive} className="td">
-                      {entry.diskUsage[drive]
-                        ? `${formatGB(entry.diskUsage[drive].total - entry.diskUsage[drive].free)} GB used of ${formatGB(entry.diskUsage[drive].total)} GB total`
-                        : 'N/A'}
-                    </td>
-                  ))}
-                </tr>
-              ))}
+              {sortedData.map((entry, index) => {
+                const rowClass = getRowClass(entry.diskUsage);
+                const timestampClass = isTimestampRecent(entry.timestamp) ? 'normal-timestamp' : 'stale-timestamp';
+
+                return (
+                  <tr key={index} className={rowClass}>
+                    <td className="td">{entry.systemName || 'Unknown'}</td>
+                    <td className={`td ${timestampClass}`}>{new Date(entry.timestamp).toLocaleString()}</td>
+                    {driveColumns.map(drive => (
+                      <td key={drive} className="td">
+                        {entry.diskUsage[drive]
+                          ? `${formatGB(entry.diskUsage[drive].total - entry.diskUsage[drive].free)} GB used of ${formatGB(entry.diskUsage[drive].total)} GB total`
+                          : 'N/A'}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </>
