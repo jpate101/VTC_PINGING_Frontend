@@ -9,6 +9,7 @@ const AvailabilityReport = () => {
   const [currentlyOnDevices, setCurrentlyOnDevices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedSystem, setSelectedSystem] = useState('');
 
   // Fetch function to get ping data
   const fetchPingData = async () => {
@@ -111,6 +112,21 @@ const AvailabilityReport = () => {
       <h2>Availability Report</h2>
       <Link to="/" className="link">Go back to Home Page</Link>
 
+      {/* Dropdown for selecting system */}
+      <div className="dropdown">
+        <label htmlFor="systemSelect">Select System:</label>
+        <select 
+          id="systemSelect" 
+          value={selectedSystem} 
+          onChange={(e) => setSelectedSystem(e.target.value)}
+        >
+          <option value="">-- Select a System --</option>
+          {uniqueSystemNames.map(systemName => (
+            <option key={systemName} value={systemName}>{systemName}</option>
+          ))}
+        </select>
+      </div>
+
       {/* Section for currently "On" devices */}
       <div className="currently-on-section">
         <h3>Currently On Devices</h3>
@@ -125,49 +141,47 @@ const AvailabilityReport = () => {
         </ul>
       </div>
 
-      {uniqueSystemNames.length > 0 ? (
-        uniqueSystemNames.map(systemName => (
-          <div key={systemName} className="graph-container">
-            <h3>{systemName}</h3>
-            <Line 
-              data={generateGraphData(systemName)} 
-              options={{
-                scales: {
-                  x: {
-                    beginAtZero: true,
-                    title: {
-                      display: true,
-                      text: 'Time',
-                    },
-                  },
-                  y: {
-                    beginAtZero: true,
-                    title: {
-                      display: true,
-                      text: 'Status',
-                    },
-                    ticks: {
-                      stepSize: 1,
-                      callback: (value) => (value === 1 ? 'On' : 'Off'),
-                    },
-                    grid: {
-                      lineWidth: 0.5, // Adjust grid line thickness
-                      color: '#ddd', // Change grid line color
-                    },
-                    border: {
-                      width: 1, // Adjust border line thickness
-                      color: '#000', // Change border color
-                    },
+      {selectedSystem ? (
+        <div className="graph-container">
+          <h3>{selectedSystem}</h3>
+          <Line 
+            data={generateGraphData(selectedSystem)} 
+            options={{
+              scales: {
+                x: {
+                  beginAtZero: true,
+                  title: {
+                    display: true,
+                    text: 'Time',
                   },
                 },
-              }} 
-              width={600} // Set chart width
-              height={300} // Set chart height
-            />
-          </div>
-        ))
+                y: {
+                  beginAtZero: true,
+                  title: {
+                    display: true,
+                    text: 'Status',
+                  },
+                  ticks: {
+                    stepSize: 1,
+                    callback: (value) => (value === 1 ? 'On' : 'Off'),
+                  },
+                  grid: {
+                    lineWidth: 0.5, // Adjust grid line thickness
+                    color: '#ddd', // Change grid line color
+                  },
+                  border: {
+                    width: 1, // Adjust border line thickness
+                    color: '#000', // Change border color
+                  },
+                },
+              },
+            }} 
+            width={600} // Set chart width
+            height={300} // Set chart height
+          />
+        </div>
       ) : (
-        <p>No system data available</p>
+        <p>Please select a system to view its availability graph.</p>
       )}
 
       <div className="table-container">
