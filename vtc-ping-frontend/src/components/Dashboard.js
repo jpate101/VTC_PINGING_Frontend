@@ -192,8 +192,8 @@ const Dashboard = () => {
                                 <td style={{ backgroundColor: machine.gpsStatus === 'Online' ? 'lightgreen' : 'lightcoral' }}>
                                     {machine.gpsStatus}
                                 </td>
-                                <td>{machine.latestLogEventId}</td>
-                                <td>{machine.latestLogEventTime !== 'N/A' ? machine.latestLogEventTime : 'N/A'}</td>
+                                <td style={{ backgroundColor: machine.latestLogEventId === '42' ? 'lightgreen' : 'lightcoral' }}>{machine.latestLogEventId}</td>
+                                <td style={{ backgroundColor: machine.latestLogEventId === '42' ? 'lightgreen' : 'lightcoral' }}>{machine.latestLogEventTime !== 'N/A' ? machine.latestLogEventTime : 'N/A'}</td>
                                 <td style={{ backgroundColor: machine.camera101Status === 'Online' ? 'lightgreen' : 'lightcoral' }}>
                                     {machine.camera101Status}
                                 </td>
